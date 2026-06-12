@@ -4,15 +4,12 @@
 
 ### 1. docker compose ps (all 5 services running)
 ```
-docker compose ps
-```
-```
-NAME             IMAGE                COMMAND                  SERVICE    CREATED          STATUS                       PORTS
-app-events-1     app-events           "uvicorn main:app --…"   events     11 seconds ago   Up 6 seconds                 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp
-app-gateway-1    app-gateway          "uvicorn main:app --…"   gateway    8 seconds ago    Up 6 seconds                 0.0.0.0:3080->8080/tcp, [::]:3080->8080/tcp
-app-payments-1   app-payments         "uvicorn main:app --…"   payments   11 seconds ago   Up 7 seconds                 0.0.0.0:8082->8082/tcp, [::]:8082->8082/tcp
-app-postgres-1   postgres:17-alpine   "docker-entrypoint.s…"   postgres   12 hours ago     Up About an hour (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
-app-redis-1      redis:7-alpine       "docker-entrypoint.s…"   redis      12 hours ago     Up About an hour (healthy)   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+[ustkost@prime app]$ docker compose ps
+NAME             IMAGE                COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+app-events-1     app-events           "uvicorn main:app --…"   events     41 minutes ago   Up 22 minutes             0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp
+app-gateway-1    app-gateway          "uvicorn main:app --…"   gateway    41 minutes ago   Up 41 minutes             0.0.0.0:3080->8080/tcp, [::]:3080->8080/tcp
+app-postgres-1   postgres:17-alpine   "docker-entrypoint.s…"   postgres   41 minutes ago   Up 21 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+app-redis-1      redis:7-alpine       "docker-entrypoint.s…"   redis      41 minutes ago   Up 22 minutes (healthy)   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
 ```
 ### 2. Critical path: list → reserve → pay
 ```
@@ -164,9 +161,12 @@ index c86db33..56a1541 100644
 ```
 [ustkost@prime app]$ curl -s -X POST http://localhost:3080/events/1/reserve \
   -H "Content-Type: application/json" -d '{"quantity": 1}'
-{"reservation_id":"41f875e9-59d8-4851-b0da-cc6e49102308","event_id":1,"quantity":1,"total_cents":5000,"expires_in_seconds":300} 
-[ustkost@prime app]$ curl -s -X POST http://localhost:3080/reserve/RESERVATION_ID/pay
-{"error":"payments_unavailable","message":"Payment service is temporarily down. Your reservation is held — try again in a few minutes.","reservation_id":"RESERVATION_ID"}
+
+{"reservation_id":"4d9d345a-82c7-49f7-97e1-46e877424813","event_id":1,"quantity":1,"total_cents":5000,"expires_in_seconds":300}
+
+[ustkost@prime app]$ curl -s -X POST http://localhost:3080/reserve/4d9d345a-82c7-49f7-97e1-46e877424813/pay
+
+{"error":"payments_unavailable","message":"Payment service is temporarily down. Your reservation is held — try again in a few minutes.","reservation_id":"4d9d345a-82c7-49f7-97e1-46e877424813"}
 ```
 ## Task 3 — GitHub Community Engagement
 ```
