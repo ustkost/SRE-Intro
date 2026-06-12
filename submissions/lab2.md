@@ -112,16 +112,6 @@ When the gateway calls `http://events:8081`, the DNS server resolves events to t
 
 ## Task 2 — Dockerfile Optimization
 
-### .dockerignore content
-```
-pycache
-*.pyc
-.git
-.env
-*.md
-.vscode
-```
-
 ### Image sizes before / after
 
 Before:
