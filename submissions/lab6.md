@@ -25,40 +25,40 @@ https://images.iimg.live/images/incredible-portfolio-5026.webp
 
 1. Check overall application health:
 
-   ```bash
+   \`\`\`bash
    curl -s http://localhost:3080/health | python3 -m json.tool
-   ```
+   \`\`\`
 
 2. Check gateway logs:
 
-   ```bash
+   \`\`\`bash
    docker compose logs gateway --tail=50 --since=5m
-   ```
+   \`\`\`
 
 3. Check payments service:
 
-   ```bash
+   \`\`\`bash
    curl -s http://localhost:8082/health
-   ```
+   \`\`\`
 
 4. Check events service:
 
-   ```bash
+   \`\`\`bash
    curl -s http://localhost:8081/health
-   ```
+   \`\`\`
 
 5. Check database logs:
 
-   ```bash
+   \`\`\`bash
    docker compose logs db --tail=50 --since=5m
-   ```
+   \`\`\`
 
 6. Check backend service logs:
 
-   ```bash
+   \`\`\`bash
    docker compose logs events --tail=50 --since=5m
    docker compose logs payments --tail=50 --since=5m
-   ```
+   \`\`\`
 
 ## Common Causes
 
