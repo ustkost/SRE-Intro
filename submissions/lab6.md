@@ -4,9 +4,9 @@
 
 ### 1. Alert PromQL rules
 ```promql
-sum(rate(gateway_requests_total{status=~\"5..\"}[5m])) / sum(rate(gateway_requests_total[5m])) * 100
+sum(rate(gateway_requests_total{status=~"5.."}[5m])) / sum(rate(gateway_requests_total[5m])) * 100 # Error rate
 
-(1 - (sum(rate(gateway_requests_total{status!~\"5..\"}[30m])) / sum(rate(gateway_requests_total[30m])))) / (1 - 0.995)
+(1 - (sum(rate(gateway_requests_total{status!~\"5..\"}[30m])) / sum(rate(gateway_requests_total[30m])))) / (1 - 0.995) # Burn rate 
 ```
 
 ### 2. Notification received evidence
@@ -25,40 +25,28 @@ https://images.iimg.live/images/incredible-portfolio-5026.webp
 
 1. Check overall application health:
 
-   \`\`\`bash
    curl -s http://localhost:3080/health | python3 -m json.tool
-   \`\`\`
 
 2. Check gateway logs:
 
-   \`\`\`bash
    docker compose logs gateway --tail=50 --since=5m
-   \`\`\`
 
 3. Check payments service:
 
-   \`\`\`bash
    curl -s http://localhost:8082/health
-   \`\`\`
 
 4. Check events service:
 
-   \`\`\`bash
    curl -s http://localhost:8081/health
-   \`\`\`
 
 5. Check database logs:
 
-   \`\`\`bash
    docker compose logs db --tail=50 --since=5m
-   \`\`\`
 
-6. Check backend service logs:
+6. Check other services logs:
 
-   \`\`\`bash
    docker compose logs events --tail=50 --since=5m
    docker compose logs payments --tail=50 --since=5m
-   \`\`\`
 
 ## Common Causes
 
@@ -74,15 +62,11 @@ https://images.iimg.live/images/incredible-portfolio-5026.webp
 
 Restart a service:
 
-```bash
 docker compose restart <service>
-```
 
 Example:
 
-```bash
 docker compose restart payments
-```
 
 After restarting:
 
