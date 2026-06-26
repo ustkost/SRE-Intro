@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret
       containers:
       - name: gateway
-        image: ghcr.io/ustkost/quickticket-gateway:2a69b1c5f9796ee47f540122048f9626f9300ec0
+        image: ghcr.io/ustkost/quickticket-gateway:does-not-exist
         imagePullPolicy: Always 
         ports:
         - containerPort: 8080
